@@ -92,22 +92,29 @@ public class MainPanel extends JPanel {
         openUrlButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String imageUrl = JOptionPane.showInputDialog("Enter image URL:");
-                if (imageUrl != null && !imageUrl.trim().isEmpty()) {
-                    try {
-                        originalImage = FileUtil.loadImageFromUrl(imageUrl);
-                        originalImagePanel.setImage(originalImage);
-                        saveButton.setEnabled(false);
-                        // Reset filtered image paths
-                        filteredImagePaths = null;
-                        filteredImagePanel.setImage(null);
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(MainPanel.this, "Error loading image: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JTextField urlField = new JTextField();
+                Object[] message = {
+                        "Enter image URL:", urlField
+                };
+
+                int option = JOptionPane.showConfirmDialog(null, message, "Input", JOptionPane.OK_CANCEL_OPTION);
+                if (option == JOptionPane.OK_OPTION) {
+                    String imageUrl = urlField.getText();
+                    if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+                        try {
+                            originalImage = FileUtil.loadImageFromUrl(imageUrl);
+                            originalImagePanel.setImage(originalImage);
+                            saveButton.setEnabled(false);
+                            // Reset filtered image paths
+                            filteredImagePaths = null;
+                            filteredImagePanel.setImage(null);
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(MainPanel.this, "Error loading image: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 }
             }
         });
-
         applyGreyscaleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
