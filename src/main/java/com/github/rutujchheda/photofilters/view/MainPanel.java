@@ -232,6 +232,15 @@ public class MainPanel extends JPanel {
             if (image != null) {
                 int width = (int) (image.getWidth() * zoomFactor);
                 int height = (int) (image.getHeight() * zoomFactor);
+
+                // Calculate the center of the panel
+                int panelCenterX = this.getWidth() / 2;
+                int panelCenterY = this.getHeight() / 2;
+
+                // Adjust the image's corner point to be at the center of the panel minus half the width and height of the image
+                imageCorner.x = panelCenterX - width / 2;
+                imageCorner.y = panelCenterY - height / 2;
+
                 g.drawImage(image, imageCorner.x, imageCorner.y, width, height, this);
             }
         }
