@@ -1,0 +1,382 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": false,
+    "cutTests": false,
+    "cutClient": false,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": false,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.github.rutujchheda.photofilters.view.MainPanel",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1245635613 { 
+   	label=github
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_9296634 { 
+   	label=rutujchheda
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   ClarendonConverter1402912574[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ClarendonConverter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- applyClarendonFilter(original: RGB): RGB</TD></TR>
+<TR><TD ALIGN="LEFT" >+ convert(image: Photo, imageName: String): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ConcurrentConverter604903011[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConcurrentConverter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   convertedImageLocation: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   converter: PhotoConverter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   inputImage: Photo [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getConvertedImageLocation(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ConversionType177902411[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(E)ConversionType</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   CLARENDON: ConversionType [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   GREYSCALE: ConversionType [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   INVERSION: ConversionType [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   SEPIA: ConversionType [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ valueOf(name: String): ConversionType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ values(): ConversionType[]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#DCFBD5"
+];
+
+ConvertPhotoActivity1135751251[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConvertPhotoActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   conversionResults: Map&lt;ConcurrentConverter, Future&lt;Void&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   converterMapper: ConverterStrategyMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   executorService: ExecutorService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- gatherResults(): List&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ handleRequest(filePath: String, conversionTypes: List&lt;ConversionType&gt;): List&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >- shutDownExecutorService()</TD></TR>
+<TR><TD ALIGN="LEFT" >- submitConcurrentConverter(concurrentConverter: ConcurrentConverter)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ConverterStrategyMapper1402912574[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConverterStrategyMapper</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   converterMap: Map&lt;ConversionType, PhotoConverter&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getImageConverter(conversionType: ConversionType): PhotoConverter</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getImageConverters(): Set&lt;Entry&lt;ConversionType, PhotoConverter&gt;&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DraggableZoomablePanel393580992[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DraggableZoomablePanel</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   image: BufferedImage [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   imageCorner: Point [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   prevPt: Point [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   zoomFactor: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># paintComponent(g: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setImage(image: BufferedImage)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+FileUtil1114360736[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)FileUtil</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ copyFile(source: File, dest: File)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ loadImage(file: File): BufferedImage</TD></TR>
+<TR><TD ALIGN="LEFT" >+ loadImageFromUrl(imageUrl: String): BufferedImage</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+GreyscaleConverter1402912574[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)GreyscaleConverter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ convert(image: Photo, imageName: String): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+InversionConverter1402912574[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)InversionConverter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ convert(image: Photo, imageName: String): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MainPanel1114379843[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainPanel</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   applyGreyscaleButton: JButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   applyInversionButton: JButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   applySepiaButton: JButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   clarendonButton: JButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   filePathLabel: JLabel [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   filteredImage: BufferedImage [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   filteredImagePanel: DraggableZoomablePanel [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   filteredImagePaths: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   openButton: JButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   openUrlButton: JButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   originalImage: BufferedImage [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   originalImagePanel: DraggableZoomablePanel [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   saveButton: JButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   selectedFile: File [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- applyFilter(conversionType: ConversionType)</TD></TR>
+<TR><TD ALIGN="LEFT" >- chooseFile()</TD></TR>
+<TR><TD ALIGN="LEFT" >- saveFilteredImages()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Photo177902411[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Photo</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   height: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   pixels: List&lt;Pixel&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   type: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   width: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getHeight(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPixels(): List&lt;Pixel&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getType(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getWidth(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ hashCode(): int</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PhotoUtil1114360736[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PhotoUtil</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- createRGB(bufferedImageRGBValue: int): RGB</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fromFile(filePath: String): Photo</TD></TR>
+<TR><TD ALIGN="LEFT" >- getRGBIntValue(rgb: RGB): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ savePhoto(image: Photo, imageName: String, conversionType: ConversionType): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Pixel177902411[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Pixel</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   rgb: RGB [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   x: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   y: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getRGB(): RGB</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getX(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getY(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ hashCode(): int</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+RGB177902411[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)RGB</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   blue: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   green: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   red: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   transparency: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- check(red: int, green: int, blue: int, transparency: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getBlue(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getGreen(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getRed(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTransparency(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ hashCode(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ invert(): RGB</TD></TR>
+<TR><TD ALIGN="LEFT" >+ toGreyScale(): RGB</TD></TR>
+<TR><TD ALIGN="LEFT" >+ toSepia(): RGB</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SepiaConverter1402912574[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SepiaConverter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ convert(image: Photo, imageName: String): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+ConcurrentConverter604903011 -> ClarendonConverter1402912574[arrowhead=none];
+ConcurrentConverter604903011 -> GreyscaleConverter1402912574[arrowhead=none];
+ConcurrentConverter604903011 -> InversionConverter1402912574[arrowhead=none];
+ConcurrentConverter604903011 -> Photo177902411[label="inputImage
+[0..1]"];
+ConcurrentConverter604903011 -> SepiaConverter1402912574[arrowhead=none];
+ConvertPhotoActivity1135751251 -> ConcurrentConverter604903011[label="conversionResults
+[0..*]"];
+ConvertPhotoActivity1135751251 -> ConverterStrategyMapper1402912574[label="converterMapper
+[0..1]"];
+ConvertPhotoActivity1135751251 -> PhotoUtil1114360736[label="handleRequest() -> fromFile()"];
+ConverterStrategyMapper1402912574 -> ConversionType177902411[label="converterMap
+[0..*]"];
+MainPanel1114379843 -> ConvertPhotoActivity1135751251[label="applyFilter() -> handleRequest()"];
+MainPanel1114379843 -> DraggableZoomablePanel393580992[label="filteredImagePanel
+[0..1]"];
+MainPanel1114379843 -> DraggableZoomablePanel393580992[label="originalImagePanel
+[0..1]"];
+    
+}
+@enduml

@@ -4,8 +4,8 @@ public enum ConversionType {
 
     SEPIA("sepia"),
     GREYSCALE("greyscale"),
-    INVERSION("inversion");
-
+    INVERSION("inversion"),
+    CLARENDON("clarendon");
     private final String name;
 
     private ConversionType(String name) {

@@ -18,11 +18,11 @@ public class PhotoConverterManualTester {
      * If you're having issues running the main method, check the "Before starting" steps in the README.
      */
     public static void main(String[] args) {
-        runTest("src/main/resources/Photographing-NYC-skyline.jpg", ImmutableList.of(ConversionType.INVERSION,
-                ConversionType.GREYSCALE, ConversionType.SEPIA));
+//        runTest("src/main/resources/Photographing-NYC-skyline.jpg", ImmutableList.of(ConversionType.INVERSION,
+//                ConversionType.GREYSCALE, ConversionType.SEPIA));
 
         // Uncomment the below line to run a test that converts an image to a single filter type.
-//         runTest("src/main/resources/Photographing-NYC-skyline.jpg", ImmutableList.of(ConversionType.SEPIA));
+         runTest("src/main/resources/Photographing-NYC-skyline.jpg", ImmutableList.of(ConversionType.CLARENDON));
     }
 
     private static void runTest(String filePath, ImmutableList<ConversionType> conversions) {

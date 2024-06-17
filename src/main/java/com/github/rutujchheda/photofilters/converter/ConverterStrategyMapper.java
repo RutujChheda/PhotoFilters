@@ -13,6 +13,7 @@ public final class ConverterStrategyMapper {
     private final Map<ConversionType, PhotoConverter> converterMap = ImmutableMap.of(
             ConversionType.SEPIA, new SepiaConverter(),
             ConversionType.GREYSCALE, new GreyscaleConverter(),
+            ConversionType.CLARENDON, new ClarendonConverter(),
             ConversionType.INVERSION, new InversionConverter()
     );
 

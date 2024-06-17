@@ -32,6 +32,7 @@ public class MainPanel extends JPanel {
     private JButton applyGreyscaleButton;
     private JButton applyInversionButton;
     private JButton applySepiaButton;
+    private JButton clarendonButton;
     private DraggableZoomablePanel originalImagePanel;
     private DraggableZoomablePanel filteredImagePanel;
     private BufferedImage originalImage;
@@ -69,10 +70,19 @@ public class MainPanel extends JPanel {
         applyGreyscaleButton = new JButton("Apply Greyscale");
         applyInversionButton = new JButton("Apply Inversion");
         applySepiaButton = new JButton("Apply Sepia");
+        clarendonButton = new JButton("Apply Clarendon");
+        bottomPanel.add(clarendonButton);
         bottomPanel.add(applyGreyscaleButton);
         bottomPanel.add(applyInversionButton);
         bottomPanel.add(applySepiaButton);
         add(bottomPanel, BorderLayout.SOUTH);
+
+        clarendonButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                applyFilter(ConversionType.CLARENDON);
+            }
+        });
 
         // Add action listeners
         openButton.addActionListener(new ActionListener() {

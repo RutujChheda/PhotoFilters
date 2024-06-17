@@ -1,0 +1,67 @@
+@startuml
+
+class MainPanel {
+    - applyGreyscaleButton: JButton
+    - applyInversionButton: JButton
+    - applySepiaButton: JButton
+    - clarendonButton: JButton
+    - filePathLabel: JLabel
+    - filteredImage: BufferedImage
+    - filteredImagePanel: DraggableZoomablePanel
+    - filteredImagePaths: List<String>
+    - openButton: JButton
+    - openUrlButton: JButton
+    - originalImage: BufferedImage
+    - originalImagePanel: DraggableZoomablePanel
+    - saveButton: JButton
+    - selectedFile: File
+    --
+    - applyFilter(conversionType: ConversionType)
+    - chooseFile()
+    - saveFilteredImages()
+}
+
+class DraggableZoomablePanel {
+    - image: BufferedImage
+    - imageCorner: Point
+    - prevPt: Point
+    - zoomFactor: double
+    --
+    # paintComponent(g: Graphics)
+    + setImage(image: BufferedImage)
+}
+
+class ConvertPhotoActivity {
+    - conversionResults: Map<ConcurrentConverter, Future<Void>>
+    - converterMapper: ConverterStrategyMapper
+    - executorService: ExecutorService
+    --
+    - gatherResults(): List<String>
+    + handleRequest(filePath: String, conversionTypes: List<ConversionType>): List<String>
+    - shutDownExecutorService()
+    - submitConcurrentConverter(concurrentConverter: ConcurrentConverter)
+}
+
+class ConverterStrategyMapper {
+    - converterMap: Map<ConversionType, PhotoConverter>
+    --
+    + getImageConverter(conversionType: ConversionType): PhotoConverter
+    + getImageConverters(): Set<Entry<ConversionType, PhotoConverter>>
+}
+
+class ConcurrentConverter {
+    - convertedImageLocation: String
+    - converter: PhotoConverter
+    - fileName: String
+    - inputImage: Photo
+    --
+    + getConvertedImageLocation(): String
+    + run()
+}
+
+MainPanel --> DraggableZoomablePanel : contains
+MainPanel --> ConvertPhotoActivity : uses
+ConvertPhotoActivity --> ConverterStrategyMapper : uses
+ConvertPhotoActivity --> ConcurrentConverter : uses
+
+@enduml

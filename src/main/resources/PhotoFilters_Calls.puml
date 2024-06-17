@@ -1,0 +1,52 @@
+@startuml
+
+class MainPanel {
+    +MainPanel()
+}
+
+class PhotoFilters {
+    +main()
+}
+
+class ConvertPhotoActivity {
+    +handleRequest()
+}
+
+class FileUtil {
+    +loadImage()
+    +loadImageFromUrl()
+    +copyFile()
+}
+
+class DraggableZoomablePanel {
+    +setImage()
+}
+
+class ConverterStrategyMapper {
+    +getImageConverter()
+}
+
+class ConcurrentConverter {
+    +getConvertedImageLocation()
+}
+
+class PhotoUtil {
+    +fromFile()
+}
+
+class PhotoConverterManualTester {
+    +main()
+}
+
+
+
+PhotoFilters --> MainPanel : calls
+MainPanel --> ConvertPhotoActivity : calls
+MainPanel --> FileUtil : calls
+MainPanel --> DraggableZoomablePanel : calls
+ConvertPhotoActivity --> ConcurrentConverter : calls
+ConvertPhotoActivity --> ConverterStrategyMapper : calls
+ConvertPhotoActivity --> PhotoUtil : calls
+PhotoConverterManualTester --> ConvertPhotoActivity : calls
+
+@enduml
