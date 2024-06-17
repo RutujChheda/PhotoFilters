@@ -9,10 +9,17 @@ import com.github.rutujchheda.photofilters.util.FileUtil;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +51,6 @@ public class MainPanel extends JPanel {
         saveButton.setEnabled(false);
         openUrlButton = new JButton("Open from URL");
         topPanel.add(openUrlButton);
-
         topPanel.add(openButton);
         topPanel.add(saveButton);
         add(topPanel, BorderLayout.NORTH);
@@ -120,6 +126,42 @@ public class MainPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 applyFilter(ConversionType.SEPIA);
+            }
+        });
+
+        // Add a drop target to the panel
+        new DropTarget(this, new DropTargetAdapter() {
+            @Override
+            public void drop(DropTargetDropEvent dtde) {
+                try {
+                    Transferable tr = dtde.getTransferable();
+                    DataFlavor[] flavors = tr.getTransferDataFlavors();
+                    for (int i = 0; i < flavors.length; i++) {
+                        if (flavors[i].isFlavorJavaFileListType()) {
+                            dtde.acceptDrop(dtde.getDropAction());
+                            List<File> files = (List<File>) tr.getTransferData(flavors[i]);
+                            if (files.size() > 0) {
+                                // Load the first file in the list
+                                File originalFile = files.get(0);
+                                // Create a copy of the file in the local directory
+                                selectedFile = new File(System.getProperty("user.dir"), originalFile.getName());
+                                Files.copy(originalFile.toPath(), selectedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                                originalImage = FileUtil.loadImage(selectedFile);
+                                originalImagePanel.setImage(originalImage);
+                                saveButton.setEnabled(false);
+                                // Reset filtered image paths
+                                filteredImagePaths = null;
+                                filteredImagePanel.setImage(null);
+                            }
+                            dtde.dropComplete(true);
+                            return;
+                        }
+                    }
+                    dtde.rejectDrop();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    dtde.rejectDrop();
+                }
             }
         });
     }
