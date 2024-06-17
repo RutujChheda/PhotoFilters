@@ -18,6 +18,7 @@ import java.util.List;
 
 public class MainPanel extends JPanel {
 
+    private JButton openUrlButton;
     private JLabel filePathLabel;
     private JButton openButton;
     private JButton saveButton;
@@ -41,6 +42,9 @@ public class MainPanel extends JPanel {
         openButton = new JButton("Open");
         saveButton = new JButton("Save");
         saveButton.setEnabled(false);
+        openUrlButton = new JButton("Open from URL");
+        topPanel.add(openUrlButton);
+
         topPanel.add(openButton);
         topPanel.add(saveButton);
         add(topPanel, BorderLayout.NORTH);
@@ -76,6 +80,25 @@ public class MainPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 saveFilteredImages();
+            }
+        });
+
+        openUrlButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String imageUrl = JOptionPane.showInputDialog("Enter image URL:");
+                if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+                    try {
+                        originalImage = FileUtil.loadImageFromUrl(imageUrl);
+                        originalImagePanel.setImage(originalImage);
+                        saveButton.setEnabled(false);
+                        // Reset filtered image paths
+                        filteredImagePaths = null;
+                        filteredImagePanel.setImage(null);
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(MainPanel.this, "Error loading image: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
         });
 
